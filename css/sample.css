@@ -1,0 +1,98 @@
+body{
+    margin:0;
+    padding: 100px;
+    text-align:left;
+    font-family: Roboto,
+    "Yu Gothic Medium",
+    "Open sans",
+    "游ゴシック Medium",
+    YuGothic,
+    "游ゴシック体",
+    "ヒラギノ角ゴ Pro W3",
+    "メイリオ",
+    sans-serif;
+    line-height: 1.75;
+    font-size: 20px;
+    background:'rgb(154, 143, 135)',
+}
+header{
+    background-color:'rgba(255, 99, 132, 0.2)',
+    border-bottom: 1px solid #ccc;
+    /* align:picture-in-picture */
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.header_title{
+    background: url(../img/kokuban.png);
+    background-size: 100%;
+    background-position: center;
+    height: 213px;
+    width: 350px;
+    color: #fffafa;
+}
+
+.header_text{
+    display: flex;
+    justify-content: center;
+}
+main{
+    position:relative;
+}
+
+p{
+    font-size:100%;
+}
+ul{
+    padding: 0;
+    border-top: 1px solid #000000;
+    display:table;  /* 定義 */
+    table-layout: fixed;
+    width:100%;
+}
+li{
+    list-style-type:none;
+    border: 1px solid #666;
+    background-color: #FFF;
+    display:table-cell;  /* 定義 */
+    cursor: pointer;
+}
+li:hover{
+    background: #0066CC;
+    color:#fff;
+}
+input,textarea{
+    margin: 10%;
+    width: 100%;
+    font-size:80%;
+}
+
+input{
+    height: 30px;
+    width: 100px;
+}
+.score_value{
+    height: 30px;
+    width: 80px;
+}
+
+.table {
+    display: flex;
+}
+
+.subject_text{
+    width: 80px;
+    height: 35px;
+}
+
+.your_score{
+    width: 80px;
+    height: 35px;
+}
+
+button{
+    height: 30px;
+}
+

@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
+  <title>テスト成績結果</title>
+  <link rel="stylesheet" href="css/sample.css">
+</head>
+
+<body>
+  <header class="header_title">
+    <h1 class="header_text">テスト成績結果</h1>
+  </header>
+
+  <main>
+    <div class="table">
+      <div>
+        <p class="subject_text">科目</p>
+        <p id="subject"></p>
+      </div>
+      <div>
+        <form name="fk" class="your_score">
+          <p>得点</p>
+          <div class="score_value">          
+            <input type="text" id="score01" name="dat" val="99">
+            <input type="text" id="score02" name="dat">
+            <input type="text" id="score03" name="dat">
+            <input type="text" id="score04" name="dat">
+            <input type="text" id="score05" name="sum">
+           
+          </div>
+        </form>
+      </div>
+    </div>
+    
+    <h1>
+      <button onclick="document.fk.sum.value=goukei(document.fk.dat);">合計</button>
+      <button id="save">保存</button>
+      <button id="clear">クリア</button>
+    </h1>
+    
+    <div style="width:30%;">
+      <canvas id="myChart" width="10px" height="10px"></canvas>
+    </div>
+      
+    
+    
+    
+    
+    
+    
+  </main>
+
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script>
+  //データを保存する処理
+  
+  $('#save').on('click', function () {
+   const data = {
+      国語: Number($('#score01').val()),
+      算数: Number($('#score02').val()),
+      理科: Number($('#score03').val()),
+      社会: Number($('#score04').val()),
+      合計: Number($('#score05').val()),
+    }; 
+    console.log(data);
+    const jsonData = JSON.stringify(data);
+    console.log(jsonData);
+    localStorage.setItem('memo', jsonData);
+  })
+
+
+  //保存されているデータを削除する処理
+  $('#clear').on('click', function () {
+    localStorage.removeItem('memo');
+    $('#score01').val('');
+    $('#score02').val('');
+    $('#score03').val('');
+    $('#score04').val('');
+    $('#score05').val('');
+  })
+
+  //データが存在した場合は保存されているデータを取得して表示する処理
+  if (localStorage.getItem('memo')) {
+    const jsonData = localStorage.getItem('memo');
+    console.log(jsonData);
+    const data =JSON.parse(jsonData);
+    console.log(data);
+    $('#score01').val(data.国語);
+    $('#score02').val(data.算数);
+    $('#score03').val(data.理科);
+    $('#score04').val(data.社会);
+    $('#score05').val(data.合計);
+  }
+
+
+  // 科目の配列の中身表示
+    const list01 = ['国語', '算数', '理科', '社会', '合計'];
+
+    const array01 = [];
+
+    for (let i = 0; i < list01.length; i++) {
+      array01.push('<p>' + list01[i] + '<p>');
+    }
+
+    console.log(array01);
+
+    $('#subject').html(array01);
+
+
+  // 得点の配列の中身表示
+    // let list02 = [score01, score02, score03, score04, score05];
+
+    // const array02 = [];
+
+    // for (let i = 0; i < list02.length; i++) {
+    //   array02.push('<p>' + list02[i] + '<p>');
+    // }
+
+    // console.log(array02);  
+  let ctx = document.getElementById('myChart');
+  let chart;
+
+  //合計の計算
+  onclick = "document.fk.sum.value = goukei(document.fk.dat)"
+  function goukei(xx) {
+      a = 0;
+      for (n = 0; n < 4; ++n)
+        a = a + parseInt(xx[n].value);
+
+  const data = {
+      国語: Number($('#score01').val()),
+      算数: Number($('#score02').val()),
+      理科: Number($('#score03').val()),
+      社会: Number($('#score04').val()),
+      合計: a,
+    }; 
+    console.log(data);
+      
+    //棒グラフを表示
+    if (chart) {
+      chart.destroy();
+    }
+    chart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: null,
+        datasets: [{
+          label: '成績表',
+          data: data,
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(255, 159, 64, 0.2)'
+          ],
+          borderColor: [
+            'rgba(255, 99, 132, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(153, 102, 255, 1)',
+            'rgba(255, 159, 64, 1)'
+          ],
+          borderWidth: 1
+        }]
+      }
+    });
+    // chart.data.datasets.forEach((dataset) => {
+    //   dataset.data.pop();
+    // });
+    // chart.data.datasets.forEach((dataset) => {
+    //   dataset.data.push(data);
+    // });
+    // chart.update();   
+    return a;
+    } 
+
+function startprocess(){
+ //データが存在した場合は保存されているデータを取得して表示する処理
+ let data; 
+ if (localStorage.getItem('memo')) {
+    const jsonData = localStorage.getItem('memo');
+    console.log(jsonData);
+    data = JSON.parse(jsonData);
+    console.log(data);
+    // $('#score01').val(data.score01);
+    // $('#score02').val(data.score02);
+    // $('#score03').val(data.score03);
+    // $('#score04').val(data.score04);
+    // $('#score05').val(data.score05);
+  } 
+  //棒グラフを表示
+  // let ctx = document.getElementById('myChart');
+
+ chart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: null,
+      datasets: [{
+        label: '成績表',
+        data: data,
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)'
+        ],
+        borderColor: [
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)'
+        ],
+        borderWidth: 1
+      }]
+    }
+  });
+}
+  window.onload = function () {
+    startprocess();
+  };
+
+  </script>
+
+</body>
+
+</html>
