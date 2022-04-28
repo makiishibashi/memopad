@@ -1,5 +1,5 @@
-readme.md
 #メモパッド
+[https://makiishibashi.github.io/memopad/](https://makiishibashi.github.io/memopad/)
 ##成績表とグラフ
 #苦労したところ
 ChartjsにLocalStorageに保存した値を代入するところ
